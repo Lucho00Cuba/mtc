@@ -79,6 +79,17 @@ Pre-built binaries for Linux, macOS, and Windows are available in the [Releases]
 
 ---
 
+## 📚 Documentation
+
+For comprehensive documentation, including detailed installation guides, usage examples, real-world use cases, and advanced topics, see the [Documentation](./docs/README.md) directory.
+
+- **[Installation Guide](./docs/installation.md)** - Detailed installation instructions for all platforms
+- **[Usage Guide](./docs/usage.md)** - Complete command reference with examples
+- **[Use Cases](./docs/use-cases.md)** - Real-world scenarios and practical examples
+- **[Advanced Topics](./docs/advanced.md)** - Advanced configuration and best practices
+
+---
+
 ## 🚀 Usage
 
 ### Compute Merkle checksum of a directory

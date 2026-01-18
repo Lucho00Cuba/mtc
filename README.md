@@ -3,6 +3,7 @@
 **Merkle Tree Checksum** — A deterministic directory checksum tool that generates directory checksums using Merkle Trees
 
 [![CI](https://github.com/lucho00cuba/mtc/actions/workflows/ci.yml/badge.svg)](https://github.com/lucho00cuba/mtc/actions)
+[![codecov](https://codecov.io/gh/lucho00cuba/mtc/branch/main/graph/badge.svg)](https://codecov.io/gh/lucho00cuba/mtc)
 [![Go Version](https://img.shields.io/badge/go-1.24+-00ADD8.svg)](https://golang.org)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/lucho00cuba/mtc?include_prereleases&sort=semver)](https://github.com/lucho00cuba/mtc/releases)

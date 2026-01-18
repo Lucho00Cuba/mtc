@@ -1,0 +1,13 @@
+module github.com/lucho00cuba/mtc
+
+go 1.24
+
+require github.com/spf13/cobra v1.10.2
+
+require github.com/klauspost/cpuid/v2 v2.0.12 // indirect
+
+require (
+github.com/inconshreveable/mousetrap v1.1.0 // indirect
+github.com/spf13/pflag v1.0.9 // indirect
+github.com/zeebo/blake3 v0.2.4
+)

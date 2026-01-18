@@ -1,0 +1,10 @@
+# Build artifacts
+dist/
+
+# Test artifacts
+*.test
+coverage.out
+coverage.html
+
+# OS files
+.DS_Store

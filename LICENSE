@@ -1,0 +1,57 @@
+PolyForm Noncommercial License 1.0.0
+
+Copyright (c) 2026 Luis Octavio Mota Verdasco
+
+Licensed under the PolyForm Noncommercial License 1.0.0 (the “License”); you may not use this file except in compliance with the License. You may obtain a copy of the License at:
+
+https://polyformproject.org/licenses/noncommercial/1.0.0/
+
+Terms and Conditions for Use, Reproduction, and Distribution
+
+1. Definitions
+
+“License” refers to this PolyForm Noncommercial License.
+
+“You” refers to the individual or legal entity exercising permissions granted by this License.
+
+"Software" refers to MTC and any associated source code, binaries, and modifications.
+
+“Noncommercial Purpose” means any use that is not primarily intended for or directed toward commercial advantage or monetary compensation.
+
+"Commercial Purpose" means any use of the Software that is intended for commercial advantage, monetary compensation, internal business operations, paid services, SaaS offerings, or inclusion in proprietary or revenue-generating products.
+
+2. License Grant
+
+Subject to the terms of this License, You are granted a worldwide, royalty-free, non-exclusive license to:
+
+- Use, copy, modify, and distribute the Software for Noncommercial Purposes.
+- Create derivative works for Noncommercial Purposes.
+
+3. Restrictions
+
+You may NOT:
+
+- Use the Software for any commercial purpose without prior written permission from the copyright holder.
+- Sell, sublicense, rent, lease, or otherwise monetize the Software.
+- Offer MTC as part of a paid service, product, SaaS, or platform without authorization.
+- Integrate, bundle, embed, or include the Software as part of any commercial product, proprietary solution, commercial platform, internal commercial tooling, or revenue-generating offering without prior written authorization from the copyright holder.
+
+4. Redistribution
+
+Redistributions must:
+
+- Include this LICENSE file.
+- Provide attribution to the original author.
+- Clearly state any modifications made.
+
+5. Disclaimer
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. THE AUTHORS SHALL NOT BE LIABLE FOR ANY CLAIM OR DAMAGES ARISING FROM THE USE OF THE SOFTWARE.
+
+6. Termination
+
+This License automatically terminates if You violate its terms. Upon termination, You must stop using and distributing the Software immediately.
+
+7. Commercial Licensing
+
+For any Commercial Purpose, including internal business use, SaaS, redistribution in commercial products, usage as a library, embedded component, dependency, internal tooling within commercial environments, or as part of any paid or revenue-generating offering, you must obtain a separate commercial license by contacting: luisoctavio.mota.verdasco@gmail.com

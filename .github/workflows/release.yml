@@ -1,0 +1,122 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          COMMIT=$(git rev-parse HEAD)
+          DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "COMMIT=$COMMIT" >> $GITHUB_OUTPUT
+          echo "DATE=$DATE" >> $GITHUB_OUTPUT
+
+      - name: Set up Go environment
+        run: |
+          go env -w GOPROXY=direct
+          go env -w GOSUMDB=sum.golang.org
+          go mod download
+          go mod verify
+
+      - name: Build binaries
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+          COMMIT: ${{ steps.version.outputs.COMMIT }}
+          DATE: ${{ steps.version.outputs.DATE }}
+        run: |
+          mkdir -p dist
+
+          # Define platforms matching Makefile
+          PLATFORMS="linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64"
+          BINARY_NAME="mtc"
+
+          for platform in ${PLATFORMS}; do
+            GOOS=${platform%/*}
+            GOARCH=${platform#*/}
+            OUTPUT="dist/${BINARY_NAME}-${GOOS}-${GOARCH}"
+            if [ "${GOOS}" = "windows" ]; then
+              OUTPUT="${OUTPUT}.exe"
+            fi
+            echo "🚀 Building ${GOOS}/${GOARCH}..."
+            GOOS=${GOOS} GOARCH=${GOARCH} go build \
+              -ldflags="-X 'github.com/lucho00cuba/mtc/version.VERSION=${VERSION}' -X 'github.com/lucho00cuba/mtc/version.COMMIT=${COMMIT}' -X 'github.com/lucho00cuba/mtc/version.DATE=${DATE}'" \
+              -trimpath \
+              -o ${OUTPUT} . || exit 1
+          done
+          echo "✅ All builds completed successfully"
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          for file in mtc-*; do
+            # Skip checksum files
+            if [[ "$file" == *.sha256 ]]; then
+              continue
+            fi
+            echo "Generating checksum for ${file}..."
+            sha256sum "$file" > "${file}.sha256"
+          done
+          cd ..
+
+      - name: List artifacts
+        run: |
+          echo "📦 Built artifacts:"
+          ls -lh dist/
+          echo ""
+          echo "📋 Checksums:"
+          cat dist/*.sha256
+
+      - name: Verify release files exist
+        run: |
+          cd dist
+          for file in mtc-* *.sha256; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Error: File $file does not exist!"
+              exit 1
+            fi
+            echo "✅ Found: $file"
+          done
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/mtc-linux-amd64
+            dist/mtc-linux-arm64
+            dist/mtc-darwin-amd64
+            dist/mtc-darwin-arm64
+            dist/mtc-windows-amd64.exe
+            dist/mtc-linux-amd64.sha256
+            dist/mtc-linux-arm64.sha256
+            dist/mtc-darwin-amd64.sha256
+            dist/mtc-darwin-arm64.sha256
+            dist/mtc-windows-amd64.exe.sha256
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: ${{ contains(github.ref, '-') || contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

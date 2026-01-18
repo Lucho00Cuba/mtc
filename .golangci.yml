@@ -1,0 +1,111 @@
+# golangci-lint configuration
+# Note: Some IDE YAML validators may show false positives for properties like
+# exclude-rules, exclude-dirs, exclude-files, and exclude-use-default.
+# These are valid golangci-lint configuration options and the configuration
+# is correct. The IDE validator may not be using the latest golangci-lint schema.
+
+run:
+  timeout: 5m
+  tests: true
+  concurrency: 4
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  gocritic:
+    enabled-tags:
+      - performance
+      - diagnostic
+      - style
+    disabled-checks:
+      - dupImport
+      - ifElseChain
+      - octalLiteral
+      - whyNoLint
+      - wrapperFunc
+      - hugeParam
+      - rangeValCopy
+      - paramTypeCombine
+  govet:
+    enable:
+      - shadow
+      - assign
+      - atomic
+      - bools
+      - buildtag
+      - cgocall
+      - composites
+      - copylocks
+      - errorsas
+      - httpresponse
+      - loopclosure
+      - lostcancel
+      - nilfunc
+      - printf
+      - shift
+      - stdmethods
+      - structtag
+      - tests
+      - unmarshal
+      - unreachable
+      - unsafeptr
+      - unusedresult
+  misspell:
+    locale: US
+  nolintlint:
+    allow-leading-space: true
+    allow-unused: false
+    require-explanation: false
+    require-specific: false
+  staticcheck:
+    checks: ["all"]
+  unused:
+    check-exported: false
+
+linters:
+  enable:
+    - errcheck
+    - goconst
+    - gocritic
+    - gofmt
+    - goimports
+    - govet
+    - ineffassign
+    - misspell
+    - nolintlint
+    - staticcheck
+    - unused
+  disable:
+    - typecheck
+    - deadcode
+    - varcheck
+    - structcheck
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-dirs:
+    - dist
+    - vendor
+    - .mtc
+  exclude-files:
+    - ".*\\.pb\\.go$"
+    - ".*\\.gen\\.go$"
+  exclude-rules:
+    - linters:
+        - typecheck
+      text: ".*"
+    - path: _test\.go
+      linters:
+        - errcheck
+        - goconst
+      text: "Error return value of .((os\\.)?std(out|err)\\..*|.*Close|.*Flush|os\\.Remove(All)?|.*printf?|os\\.(Un)?Setenv). is not checked"
+    - path: _test\.go
+      linters:
+        - gocritic
+      text: ".*"
